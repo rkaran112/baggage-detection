@@ -51,6 +51,5 @@ This is an early-stage/experimental project, not a finished product:
 - `src/pipeline/train_pipeline.py`, `src/pipeline/eval_pipeline.py`, and `src/pipeline/inference_pipeline.py` are all empty placeholder files — no standalone train/eval/inference entry points exist yet. Training is currently only invoked as a side effect of importing `data_ingestion.py`.
 - The dataset path in `data_ingestion.py` is hardcoded to a local machine path and will need to be changed by anyone else running the code.
 - `requirements.txt` is incomplete (missing `torchvision`, `tqdm`, `pillow`, which the code depends on).
-- `ModelTrain.test_model()` computes accuracy but doesn't print/return/log it.
 - `stepsfile.txt` (the author's own working notes) lists open TODOs: "build a model or check how many classes in the labels" and "building the train function," confirming the project is still under active development.
 - No saved model weights, evaluation metrics, or results are included in the repo.
