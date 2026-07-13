@@ -102,14 +102,13 @@ class Dataingestion:
         except Exception as e:
             raise Custom_Exception(e, sys)
 
-data_ingestion = Dataingestion()
+if __name__ == "__main__":
+    data_ingestion = Dataingestion()
 
-train_loader, valid_loader, test_loader = data_ingestion.initiate_data_ingestion()
-trainer = ModelTrain(train_loader, test_loader, valid_loader)
+    train_loader, valid_loader, test_loader = data_ingestion.initiate_data_ingestion()
+    trainer = ModelTrain(train_loader, test_loader, valid_loader)
 
-# Adjusting the number of epochs and adding learning rate scheduler
-trainer.train_model(20)  # Increased epochs for better training
+    # Adjusting the number of epochs and adding learning rate scheduler
+    trainer.train_model(20)  # Increased epochs for better training
 
-trainer.validate_model()
-
-trainer
+    trainer.validate_model()
