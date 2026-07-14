@@ -1,7 +1,0 @@
-(2024-11-17 11:53:47,342) - 24  root - INFO - Logger initialized successfully. 
-(2024-11-17 11:56:43,866) - 76  root - INFO - started Data ingestion 
-(2024-11-17 11:56:44,524) - 93  root - INFO - Loading the data 
-(2024-11-17 11:56:44,524) - 98  root - INFO - Loading Successful 
-(2024-11-17 11:56:50,624) - 76  root - INFO - started Data ingestion 
-(2024-11-17 11:56:50,640) - 93  root - INFO - Loading the data 
-(2024-11-17 11:56:50,641) - 98  root - INFO - Loading Successful 

@@ -6,8 +6,11 @@ import sys
 # Get the log file name with timestamp
 LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
 
-# Create 'Logs' directory if it doesn't exist
-logs_path = os.path.join(os.getcwd(), "Logs")
+# Create 'Logs' directory at the project root, regardless of the caller's
+# working directory (os.getcwd() previously scattered log files wherever
+# a script happened to be run from, e.g. src/notebooks/Logs/).
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+logs_path = os.path.join(project_root, "Logs")
 os.makedirs(logs_path, exist_ok=True)
 
 # Define the complete file path for the log file
