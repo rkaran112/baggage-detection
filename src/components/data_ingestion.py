@@ -31,7 +31,14 @@ class CustomDataset(Dataset):
        
         self.image_files = sorted(os.listdir(images_dir))
         self.label_files = sorted(os.listdir(labels_dir))
-                
+
+        if len(self.image_files) != len(self.label_files):
+            raise ValueError(
+                f"Image/label count mismatch: {len(self.image_files)} images in "
+                f"{images_dir} but {len(self.label_files)} files in {labels_dir}. "
+                "Check for stray files (e.g. classes.txt) in the labels folder."
+            )
+
     def __len__(self):
         return len(self.image_files)
 
