@@ -28,11 +28,11 @@ class ModelTrain:
         return images.to(self.device), targets['labels'].to(self.device).squeeze()
 
     def train_model(self, num_epochs=20, patience=5):
-        self.model.train()
         best_val_loss = float('inf')
         epochs_without_improvement = 0
 
         for epoch in range(num_epochs):
+            self.model.train()  # validate_model() leaves the model in eval mode
             running_loss = 0.0
             progress_bar = tqdm(enumerate(self.train_loader), total=len(self.train_loader), desc=f'Epoch {epoch + 1}/{num_epochs}', leave=False)
 
