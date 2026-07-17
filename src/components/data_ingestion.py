@@ -5,7 +5,6 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from PIL import Image
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-from src.utils import visualize_sample
 from src.logger import logging
 from src.exception import Custom_Exception
 from src.components.model_trainer import ModelTrain
