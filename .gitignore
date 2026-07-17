@@ -1,7 +1,6 @@
 /data/
 /Logs/
-/src/__pycache__/
 /artifacts/
 /stepsfile.txt
-/src/components/__pycache__/
+__pycache__/
 model_weights.pth
