@@ -24,7 +24,9 @@ class ModelTrain:
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, 'min', patience=3, factor=0.5)
 
     def _to_device(self, images, targets):
-        return images.to(self.device), targets['labels'].to(self.device).squeeze()
+        # squeeze(1) only, not squeeze(): a size-1 final batch would otherwise
+        # also collapse the batch dimension, turning labels into a 0-d scalar.
+        return images.to(self.device), targets['labels'].to(self.device).squeeze(1)
 
     def train_model(self, num_epochs=20, patience=5):
         best_val_loss = float('inf')
