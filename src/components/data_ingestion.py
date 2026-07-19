@@ -56,6 +56,10 @@ class CustomDataset(Dataset):
         with open(label_path, "r") as file:
             for line in file:
                 parts = line.strip().split()
+                if not parts:
+                    # Skip blank lines (e.g. trailing newline), common in
+                    # YOLO-format label files produced by annotation tools.
+                    continue
                 class_id = int(parts[0])
                 x_center, y_center, width, height = map(float, parts[1:])
                 boxes.append([x_center, y_center, width, height])
