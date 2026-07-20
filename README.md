@@ -22,13 +22,13 @@ pip install -r requirements.txt
 
 ## Usage
 
-The dataset is expected in YOLO layout (`images/` + `labels/` folders per split) under a `data/` directory with `train`, `valid`, and `test` subfolders. The path is currently hardcoded in `src/components/data_ingestion.py`:
+The dataset is expected in YOLO layout (`images/` + `labels/` folders per split) under a `data/` directory with `train`, `valid`, and `test` subfolders. The path defaults to the author's own machine in `src/components/data_ingestion.py`:
 
 ```python
-data_dir = "D:/Code/ML_projects/baggage_detection/data"
+data_dir = os.environ.get("BAGGAGE_DATA_DIR", "D:/Code/ML_projects/baggage_detection/data")
 ```
 
-You'll need to edit this path to point at your own dataset before running anything.
+Point it at your own dataset by setting the `BAGGAGE_DATA_DIR` environment variable before running anything, e.g. `export BAGGAGE_DATA_DIR=/path/to/data`.
 
 Once the path is set, run data ingestion directly to kick off training (this module builds the data loaders and immediately starts training a `ModelTrain` instance for 20 epochs):
 
@@ -43,6 +43,6 @@ There's also a Jupyter notebook, `src/notebooks/data_ingestion.ipynb`, used for 
 This is an early-stage/experimental project, not a finished product:
 
 - `src/pipeline/train_pipeline.py`, `src/pipeline/eval_pipeline.py`, and `src/pipeline/inference_pipeline.py` are all empty placeholder files — no standalone train/eval/inference entry points exist yet. Training is currently only invoked by running `data_ingestion.py` directly.
-- The dataset path in `data_ingestion.py` is hardcoded to a local machine path and will need to be changed by anyone else running the code.
+- The dataset path in `data_ingestion.py` defaults to a local machine path; set `BAGGAGE_DATA_DIR` to point it elsewhere.
 - `stepsfile.txt` (the author's own working notes) lists open TODOs: "build a model or check how many classes in the labels" and "building the train function," confirming the project is still under active development.
 - No saved model weights, evaluation metrics, or results are included in the repo.

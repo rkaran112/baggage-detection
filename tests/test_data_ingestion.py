@@ -1,3 +1,4 @@
+import importlib
 import os
 import sys
 import tempfile
@@ -8,6 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from PIL import Image
 
 from src.components.data_ingestion import CustomDataset
+import src.components.data_ingestion as data_ingestion
 
 
 class TestCustomDataset(unittest.TestCase):
@@ -54,6 +56,31 @@ class TestCustomDataset(unittest.TestCase):
         dataset = CustomDataset(self.images_dir, self.labels_dir)
 
         self.assertEqual(len(dataset), 2)
+
+
+class TestDataIngestionConfig(unittest.TestCase):
+    def tearDown(self):
+        os.environ.pop("BAGGAGE_DATA_DIR", None)
+        importlib.reload(data_ingestion)
+
+    def test_data_dir_defaults_when_env_var_unset(self):
+        os.environ.pop("BAGGAGE_DATA_DIR", None)
+        importlib.reload(data_ingestion)
+
+        self.assertEqual(
+            data_ingestion.DataIngestionConfig.data_dir,
+            "D:/Code/ML_projects/baggage_detection/data",
+        )
+
+    def test_data_dir_honors_env_var_override(self):
+        os.environ["BAGGAGE_DATA_DIR"] = "/tmp/some_dataset"
+        importlib.reload(data_ingestion)
+
+        self.assertEqual(data_ingestion.DataIngestionConfig.data_dir, "/tmp/some_dataset")
+        self.assertEqual(
+            data_ingestion.DataIngestionConfig.train_images_dir,
+            os.path.join("/tmp/some_dataset", "train", "images"),
+        )
 
 
 if __name__ == "__main__":

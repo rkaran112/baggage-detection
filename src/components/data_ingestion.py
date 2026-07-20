@@ -11,7 +11,9 @@ from src.components.model_trainer import ModelTrain
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 class DataIngestionConfig:
-    data_dir = "D:/Code/ML_projects/baggage_detection/data"
+    # Override via the BAGGAGE_DATA_DIR env var instead of editing this
+    # hardcoded path, which only ever pointed at the author's own machine.
+    data_dir = os.environ.get("BAGGAGE_DATA_DIR", "D:/Code/ML_projects/baggage_detection/data")
 
     train_images_dir = os.path.join(data_dir, "train", "images")
     train_labels_dir = os.path.join(data_dir, "train", "labels")
