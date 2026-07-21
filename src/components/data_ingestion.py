@@ -40,6 +40,20 @@ class CustomDataset(Dataset):
                 "Check for stray files (e.g. classes.txt) in the labels folder."
             )
 
+        # Matching counts alone don't guarantee correct pairing: a missing
+        # label offset by an unrelated stray file elsewhere would silently
+        # pair the wrong image with the wrong label. Verify filenames line up.
+        mismatched = [
+            (img, lbl)
+            for img, lbl in zip(self.image_files, self.label_files)
+            if os.path.splitext(img)[0] != os.path.splitext(lbl)[0]
+        ]
+        if mismatched:
+            raise ValueError(
+                f"Image/label filename mismatch in {images_dir} vs {labels_dir}: "
+                f"counts match but pairs don't correspond, e.g. {mismatched[:5]}."
+            )
+
     def __len__(self):
         return len(self.image_files)
 

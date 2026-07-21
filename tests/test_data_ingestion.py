@@ -50,6 +50,17 @@ class TestCustomDataset(unittest.TestCase):
         self.assertEqual(target["labels"].tolist(), [1])
         self.assertEqual(len(target["boxes"]), 1)
 
+    def test_init_raises_on_filename_mismatch_despite_matching_counts(self):
+        # Same number of images and labels, but the names don't correspond
+        # (e.g. an unrelated stray file offset one side by exactly one).
+        self._write_sample("a", "0 0.5 0.5 0.2 0.2\n")
+        Image.new("RGB", (10, 10)).save(os.path.join(self.images_dir, "b.jpg"))
+        with open(os.path.join(self.labels_dir, "c.txt"), "w") as f:
+            f.write("1 0.5 0.5 0.2 0.2\n")
+
+        with self.assertRaises(ValueError):
+            CustomDataset(self.images_dir, self.labels_dir)
+
     def test_len_matches_number_of_samples(self):
         self._write_sample("a", "0 0.5 0.5 0.2 0.2\n")
         self._write_sample("b", "1 0.5 0.5 0.2 0.2\n")
